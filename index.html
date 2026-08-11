@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Odd / Even Day</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="card">
+      <h1>School Day Schedule</h1>
+
+      <section class="row">
+        <p class="label">Today</p>
+        <p id="today-date" class="value">--</p>
+      </section>
+
+      <section class="row">
+        <p class="label">Today's Schedule</p>
+        <p id="today-parity" class="value">--</p>
+      </section>
+
+      <section class="row">
+        <p class="label">Next School Day</p>
+        <p id="next-school-day" class="value">--</p>
+      </section>
+
+      <section class="row">
+        <p class="label">Next Schedule</p>
+        <p id="next-parity" class="value">--</p>
+      </section>
+
+      <p id="status" class="status"></p>
+    </main>
+
+    <script src="schedule-data.js"></script>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

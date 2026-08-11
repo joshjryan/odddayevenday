@@ -1,0 +1,81 @@
+:root {
+  --bg: #f4f6fb;
+  --card: #ffffff;
+  --text: #132038;
+  --muted: #546176;
+  --border: #dde4f0;
+  --odd: #0f766e;
+  --even: #b45309;
+  --other: #1d4ed8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at top, #ffffff 0%, var(--bg) 70%);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.card {
+  width: min(560px, 100%);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+  padding: 1.25rem;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+}
+
+h1 {
+  margin: 0 0 1rem;
+  font-size: 1.4rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.65rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.row:first-of-type {
+  border-top: 0;
+}
+
+.label {
+  margin: 0;
+  color: var(--muted);
+}
+
+.value {
+  margin: 0;
+  font-weight: 700;
+  text-align: right;
+}
+
+.value.odd {
+  color: var(--odd);
+}
+
+.value.even {
+  color: var(--even);
+}
+
+.value.other {
+  color: var(--other);
+}
+
+.status {
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
