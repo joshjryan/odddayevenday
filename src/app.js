@@ -15,12 +15,14 @@ function getISODateInTimezone(date, timeZone) {
   }).format(date);
 }
 
-function toPrettyDate(isoDate, timeZone) {
+function toPrettyDate(isoDate, _timeZone) {
   const [year, month, day] = isoDate.split("-").map(Number);
   const utcDate = new Date(Date.UTC(year, month - 1, day));
 
   return new Intl.DateTimeFormat("en-US", {
-    timeZone,
+    // Keep the rendered calendar day aligned to the ISO date.
+    // Using the school timezone here can shift dates back/forward a day.
+    timeZone: "UTC",
     weekday: "long",
     month: "long",
     day: "numeric",
