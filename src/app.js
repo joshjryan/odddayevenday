@@ -44,7 +44,7 @@ function isCanceledDay(isoDate, canceledDaysSet) {
 
 function normalizeDayEntry(value) {
   if (value === "odd" || value === "even" || value === "other") {
-    return { type: value, note: "" };
+    return { type: value, note: "", school: true };
   }
 
   if (!value || typeof value !== "object") {
@@ -57,7 +57,8 @@ function normalizeDayEntry(value) {
   }
 
   const note = typeof value.note === "string" ? value.note.trim() : "";
-  return { type, note };
+  const school = value.school === false ? false : true;
+  return { type, note, school };
 }
 
 function applyShift(dayEntry, shiftDelta) {
@@ -106,7 +107,7 @@ function findNextSchoolDay(todayIso, data, canceledDaysSet) {
     }
 
     const entry = resolveDayEntry(schoolDate, data, canceledDaysSet);
-    if (entry) {
+    if (entry && entry.school !== false) {
       return { date: schoolDate, entry };
     }
   }
@@ -114,14 +115,28 @@ function findNextSchoolDay(todayIso, data, canceledDaysSet) {
   return null;
 }
 
-function setDayTypeStyle(element, type) {
-  element.classList.remove("odd", "even", "other");
-  if (type === "odd" || type === "even" || type === "other") {
-    element.classList.add(type);
+function setDayTypeStyle(element, dayEntry) {
+  element.classList.remove("odd", "even", "other", "no-school");
+
+  if (!dayEntry) {
+    return;
+  }
+
+  if (dayEntry.school === false) {
+    element.classList.add("no-school");
+    return;
+  }
+
+  if (dayEntry.type === "odd" || dayEntry.type === "even" || dayEntry.type === "other") {
+    element.classList.add(dayEntry.type);
   }
 }
 
 function formatDayTypeLabel(dayEntry) {
+  if (dayEntry.school === false) {
+    return "NO SCHOOL";
+  }
+
   return dayEntry.type.toUpperCase();
 }
 
@@ -143,7 +158,7 @@ function render() {
 
   if (todayEntry) {
     todayParityEl.textContent = formatDayTypeLabel(todayEntry);
-    setDayTypeStyle(todayParityEl, todayEntry.type);
+    setDayTypeStyle(todayParityEl, todayEntry);
   } else {
     todayParityEl.textContent = "No school scheduled";
     setDayTypeStyle(todayParityEl, null);
@@ -152,7 +167,7 @@ function render() {
   if (nextSchoolDay) {
     nextSchoolDayEl.textContent = toPrettyDate(nextSchoolDay.date, timezone);
     nextParityEl.textContent = formatDayTypeLabel(nextSchoolDay.entry);
-    setDayTypeStyle(nextParityEl, nextSchoolDay.entry.type);
+    setDayTypeStyle(nextParityEl, nextSchoolDay.entry);
 
     const notes = [];
     if (todayEntry?.note) {

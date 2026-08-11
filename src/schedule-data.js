@@ -7,16 +7,16 @@ window.scheduleData = {
   // - "odd"
   // - "even"
   // - "other"
-  // - { type: "other", note: "Special schedule details" }
+  // - { type: "other", note: "Special schedule details", school: false }
   days: {
-    "2026-08-12": { type: "other", note: "District Professional Learning Day" },
+    "2026-08-12": { type: "other", note: "District Professional Learning Day", school: false },
     "2026-08-17": "even",
     "2026-08-18": "odd",
     "2026-08-19": "even",
     "2026-08-20": "odd",
     "2026-08-21": "even",
     "2026-08-23": "even",
-    "2026-08-24": { type: "other", note: "Transition Day (6th and 9th grade only)" },
+    "2026-08-24": { type: "other", note: "Transition Day (6th and 9th grade only)", school: true },
     "2026-08-25": "odd",
     "2026-08-26": "even",
     "2026-08-27": "odd",

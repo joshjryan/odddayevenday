@@ -74,6 +74,10 @@ h1 {
   color: var(--other);
 }
 
+.value.no-school {
+  color: var(--muted);
+}
+
 .status {
   margin: 1rem 0 0;
   color: var(--muted);
