@@ -4,19 +4,34 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 
-test('no-school days promote the next school-day schedule', () => {
+test('today section always shows today and includes today note', () => {
   const appSource = fs.readFileSync(path.join(__dirname, '..', 'src', 'app.js'), 'utf8');
   const elements = {
+    'today-context': { textContent: '' },
     'today-date': { textContent: '' },
     'today-parity': { textContent: '', classList: createClassList() },
+    'today-note': { textContent: '' },
     'next-school-day': { textContent: '' },
+    'next-relative': { textContent: '' },
+    'next-school-day-count': { textContent: '' },
     'next-parity': { textContent: '', classList: createClassList() },
+    'upcoming-glance': { textContent: '', appendChild() {} },
+    'upcoming-list': { textContent: '', appendChild() {} },
     status: { textContent: '' }
   };
 
   const document = {
     getElementById(id) {
       return elements[id];
+    },
+    createElement(tagName) {
+      return {
+        tagName,
+        className: '',
+        textContent: '',
+        classList: createClassList(),
+        setAttribute() {}
+      };
     }
   };
 
@@ -63,11 +78,10 @@ test('no-school days promote the next school-day schedule', () => {
   vm.createContext(context);
   vm.runInContext(appSource, context);
 
-  assert.equal(elements['today-parity'].textContent, 'OTHER');
-  assert.equal(
-    elements['status'].textContent,
-    'Today: District Professional Learning Day | Next: Transition Day'
-  );
+  assert.equal(elements['today-context'].textContent, 'Today');
+  assert.equal(elements['today-parity'].textContent, 'NO SCHOOL (OTHER)');
+  assert.equal(elements['today-note'].textContent, 'District Professional Learning Day');
+  assert.equal(elements['status'].textContent, 'Next: Transition Day');
 });
 
 function createClassList() {

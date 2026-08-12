@@ -3,6 +3,7 @@ const scheduleData = window.scheduleData;
 const todayDateEl = document.getElementById("today-date");
 const todayContextEl = document.getElementById("today-context");
 const todayParityEl = document.getElementById("today-parity");
+const todayNoteEl = document.getElementById("today-note");
 const nextSchoolDayEl = document.getElementById("next-school-day");
 const nextRelativeEl = document.getElementById("next-relative");
 const nextSchoolDayCountEl = document.getElementById("next-school-day-count");
@@ -281,7 +282,15 @@ function applyTheme(dayEntry, showingNextDay) {
 }
 
 function formatDayTypeLabel(dayEntry) {
+  if (!dayEntry) {
+    return "NO SCHOOL";
+  }
+
   if (dayEntry.school === false) {
+    if (dayEntry.type === "other") {
+      return "NO SCHOOL (OTHER)";
+    }
+
     return "NO SCHOOL";
   }
 
@@ -300,21 +309,16 @@ function render() {
 
   const todayEntry = resolveDayEntry(todayIso, scheduleData, canceledDaysSet);
   const nextSchoolDay = findNextSchoolDay(todayIso, scheduleData, canceledDaysSet);
-  const shouldPromoteNext = !todayEntry || todayEntry.school === false;
-  const primaryDate = shouldPromoteNext && nextSchoolDay ? nextSchoolDay.date : todayIso;
-  const primaryEntry = shouldPromoteNext && nextSchoolDay ? nextSchoolDay.entry : todayEntry;
-  const primaryContext = shouldPromoteNext && nextSchoolDay ? "Next school day" : "Today";
+  setText(todayContextEl, "Today");
+  setText(todayDateEl, toPrettyDate(todayIso, timezone));
+  applyTheme(todayEntry || nextSchoolDay?.entry || null, false);
+  setText(todayParityEl, formatDayTypeLabel(todayEntry));
+  setDayTypeStyle(todayParityEl, todayEntry);
 
-  setText(todayContextEl, primaryContext);
-  setText(todayDateEl, toPrettyDate(primaryDate, timezone));
-  applyTheme(primaryEntry || nextSchoolDay?.entry || null, primaryContext === "Next school day");
-
-  if (primaryEntry) {
-    setText(todayParityEl, formatDayTypeLabel(primaryEntry));
-    setDayTypeStyle(todayParityEl, primaryEntry);
+  if (todayEntry?.note) {
+    setText(todayNoteEl, todayEntry.note);
   } else {
-    setText(todayParityEl, "No school scheduled");
-    setDayTypeStyle(todayParityEl, null);
+    setText(todayNoteEl, "");
   }
 
   if (nextSchoolDay) {
@@ -326,14 +330,7 @@ function render() {
     setText(nextParityEl, formatDayTypeLabel(nextSchoolDay.entry));
     setDayTypeStyle(nextParityEl, nextSchoolDay.entry);
 
-    const notes = [];
-    if (todayEntry?.note) {
-      notes.push(`Today: ${todayEntry.note}`);
-    }
-    if (nextSchoolDay.entry.note) {
-      notes.push(`Next: ${nextSchoolDay.entry.note}`);
-    }
-    setText(statusEl, notes.join(" | "));
+    setText(statusEl, nextSchoolDay.entry.note ? `Next: ${nextSchoolDay.entry.note}` : "");
   } else {
     setText(nextSchoolDayEl, "Not found");
     setText(nextRelativeEl, "--");

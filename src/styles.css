@@ -129,6 +129,13 @@ h1 {
   font-size: 0.96rem;
 }
 
+.hero-note {
+  margin: 0.45rem 0 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--theme) 82%, #0f172a);
+}
+
 .hero-parity.odd::before,
 .hero-parity.even::before,
 .hero-parity.no-school::before,
