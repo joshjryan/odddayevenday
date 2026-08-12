@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 
-test('other days can be marked as no-school', () => {
+test('no-school days promote the next school-day schedule', () => {
   const appSource = fs.readFileSync(path.join(__dirname, '..', 'src', 'app.js'), 'utf8');
   const elements = {
     'today-date': { textContent: '' },
@@ -63,10 +63,10 @@ test('other days can be marked as no-school', () => {
   vm.createContext(context);
   vm.runInContext(appSource, context);
 
-  assert.equal(elements['today-parity'].textContent, 'NO SCHOOL');
+  assert.equal(elements['today-parity'].textContent, 'OTHER');
   assert.equal(
     elements['status'].textContent,
-    'Today note: District Professional Learning Day | Next day note: Transition Day'
+    'Today: District Professional Learning Day | Next: Transition Day'
   );
 });
 

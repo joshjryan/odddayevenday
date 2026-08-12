@@ -10,25 +10,40 @@
     <main class="card">
       <h1>School Day Schedule</h1>
 
-      <section class="row">
-        <p class="label">Today</p>
-        <p id="today-date" class="value">--</p>
+      <section class="hero" aria-live="polite">
+        <p id="today-context" class="hero-context">Today</p>
+        <p id="today-parity" class="hero-parity">--</p>
+        <p id="today-date" class="hero-date">--</p>
       </section>
 
-      <section class="row">
-        <p class="label">Today's Schedule</p>
-        <p id="today-parity" class="value">--</p>
+      <section class="next-card" aria-label="Next school day details">
+        <div class="next-grid row">
+          <p class="label">Next school day</p>
+          <p id="next-school-day" class="value">--</p>
+        </div>
+        <div class="next-grid row">
+          <p class="label">When</p>
+          <p id="next-relative" class="value">--</p>
+        </div>
+        <div class="next-grid row">
+          <p class="label">Schedule</p>
+          <p id="next-parity" class="value">--</p>
+        </div>
+        <div class="next-grid row">
+          <p class="label">School-day countdown</p>
+          <p id="next-school-day-count" class="value">--</p>
+        </div>
       </section>
 
-      <section class="row">
-        <p class="label">Next School Day</p>
-        <p id="next-school-day" class="value">--</p>
+      <section class="upcoming-strip" aria-label="Upcoming schedule glance">
+        <p class="label">Upcoming</p>
+        <div id="upcoming-glance" class="chip-row" role="list"></div>
       </section>
 
-      <section class="row">
-        <p class="label">Next Schedule</p>
-        <p id="next-parity" class="value">--</p>
-      </section>
+      <details class="upcoming" id="upcoming-panel">
+        <summary>See next school days</summary>
+        <ul id="upcoming-list" class="upcoming-list"></ul>
+      </details>
 
       <p id="status" class="status"></p>
     </main>

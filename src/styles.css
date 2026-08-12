@@ -95,6 +95,80 @@ h1 {
   letter-spacing: -0.03em;
 }
 
+.hero {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1rem 1.1rem;
+  background: color-mix(in srgb, var(--theme-soft) 58%, white);
+  margin-bottom: 0.95rem;
+}
+
+.hero-context {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hero-parity {
+  margin: 0.25rem 0 0;
+  font-size: clamp(2rem, 7.5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-date {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.96rem;
+}
+
+.hero-parity.odd::before,
+.hero-parity.even::before,
+.hero-parity.no-school::before,
+.hero-parity.other::before {
+  content: "";
+  width: 0.72em;
+  height: 0.72em;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.hero-parity.odd::before {
+  border-radius: 999px;
+  background: var(--odd);
+}
+
+.hero-parity.even::before {
+  border-radius: 0.18em;
+  background: var(--even);
+}
+
+.hero-parity.other::before {
+  border-radius: 0.12em;
+  background: var(--other);
+  transform: rotate(45deg);
+}
+
+.hero-parity.no-school::before {
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, transparent 26%, var(--no-school) 26%, var(--no-school) 40%, transparent 40%, transparent 60%, var(--no-school) 60%, var(--no-school) 74%, transparent 74%);
+}
+
+.next-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.64);
+  margin-bottom: 0.9rem;
+}
+
 .card::after {
   content: attr(data-note);
   position: absolute;
@@ -121,6 +195,10 @@ h1 {
 
 .row:first-of-type {
   border-top: 0;
+}
+
+.next-grid {
+  margin: 0;
 }
 
 .label {
@@ -155,6 +233,68 @@ h1 {
   margin: 1rem 0 0;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+.upcoming-strip {
+  border: 1px dashed color-mix(in srgb, var(--theme) 35%, transparent);
+  border-radius: 14px;
+  padding: 0.7rem 0.75rem;
+  background: color-mix(in srgb, var(--theme-soft) 35%, white);
+}
+
+.upcoming-strip .label {
+  margin-bottom: 0.45rem;
+}
+
+.chip-row {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.chip {
+  border: 1px solid color-mix(in srgb, var(--theme) 18%, transparent);
+  border-radius: 999px;
+  padding: 0.22rem 0.6rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.chip.odd {
+  color: var(--odd);
+}
+
+.chip.even {
+  color: var(--even);
+}
+
+.chip.other,
+.chip.no-school {
+  color: var(--other);
+}
+
+.upcoming {
+  margin-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.65rem;
+}
+
+.upcoming summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.upcoming-list {
+  margin: 0.6rem 0 0;
+  padding-left: 1rem;
+  color: var(--text);
+}
+
+.upcoming-list li {
+  margin: 0.3rem 0;
 }
 
 body[data-day-theme="odd"] {
@@ -220,5 +360,20 @@ body[data-theme-source="next"] .card::after {
   body::before,
   body::after {
     animation: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+
+  .value {
+    text-align: left;
+  }
+
+  .card::after {
+    right: 1rem;
   }
 }
