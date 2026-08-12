@@ -5,6 +5,19 @@ const todayParityEl = document.getElementById("today-parity");
 const nextSchoolDayEl = document.getElementById("next-school-day");
 const nextParityEl = document.getElementById("next-parity");
 const statusEl = document.getElementById("status");
+const cardEl = document.querySelector(".card");
+
+function getThemeKey(dayEntry) {
+  if (!dayEntry) {
+    return "other";
+  }
+
+  if (dayEntry.school === false) {
+    return "no-school";
+  }
+
+  return dayEntry.type;
+}
 
 function getISODateInTimezone(date, timeZone) {
   return new Intl.DateTimeFormat("en-CA", {
@@ -132,6 +145,16 @@ function setDayTypeStyle(element, dayEntry) {
   }
 }
 
+function applyTheme(dayEntry, showingNextDay) {
+  const themeKey = getThemeKey(dayEntry);
+  document.body.dataset.dayTheme = themeKey;
+  document.body.dataset.themeSource = showingNextDay ? "next" : "today";
+
+  if (cardEl) {
+    cardEl.dataset.note = showingNextDay ? "Next school day" : "Today";
+  }
+}
+
 function formatDayTypeLabel(dayEntry) {
   if (dayEntry.school === false) {
     return "NO SCHOOL";
@@ -153,8 +176,10 @@ function render() {
 
   const todayEntry = resolveDayEntry(todayIso, scheduleData, canceledDaysSet);
   const nextSchoolDay = findNextSchoolDay(todayIso, scheduleData, canceledDaysSet);
+  const themeEntry = todayEntry || nextSchoolDay?.entry || null;
 
   todayDateEl.textContent = toPrettyDate(todayIso, timezone);
+  applyTheme(themeEntry, !todayEntry && Boolean(nextSchoolDay));
 
   if (todayEntry) {
     todayParityEl.textContent = formatDayTypeLabel(todayEntry);

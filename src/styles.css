@@ -1,12 +1,21 @@
 :root {
   --bg: #f4f6fb;
-  --card: #ffffff;
+  --bg-2: #e7ecf9;
+  --bg-3: #dfe8ff;
+  --card: rgba(255, 255, 255, 0.82);
   --text: #132038;
   --muted: #546176;
-  --border: #dde4f0;
+  --border: rgba(19, 32, 56, 0.1);
   --odd: #0f766e;
+  --odd-soft: #d6f3ef;
   --even: #b45309;
+  --even-soft: #fce7c6;
   --other: #1d4ed8;
+  --other-soft: #dbeafe;
+  --no-school: #64748b;
+  --no-school-soft: #e2e8f0;
+  --theme: var(--other);
+  --theme-soft: var(--other-soft);
 }
 
 * {
@@ -18,24 +27,87 @@ body {
   min-height: 100vh;
   font-family: "Source Sans 3", "Segoe UI", sans-serif;
   color: var(--text);
-  background: radial-gradient(circle at top, #ffffff 0%, var(--bg) 70%);
+  background:
+    radial-gradient(circle at top left, var(--theme-soft) 0%, transparent 42%),
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.75) 0%, transparent 35%),
+    linear-gradient(145deg, var(--bg) 0%, var(--bg-2) 55%, var(--bg-3) 100%);
   display: grid;
   place-items: center;
   padding: 1rem;
+  position: relative;
+  overflow: hidden;
+  background-size: 140% 140%;
+  animation: ambientShift 24s ease-in-out infinite alternate;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: auto;
+  pointer-events: none;
+  border-radius: 999px;
+  filter: blur(18px);
+  opacity: 0.65;
+}
+
+body::before {
+  width: 22rem;
+  height: 22rem;
+  right: -7rem;
+  top: -6rem;
+  background: radial-gradient(circle, color-mix(in srgb, var(--theme) 28%, white) 0%, transparent 68%);
+  animation: driftOne 18s ease-in-out infinite alternate;
+}
+
+body::after {
+  width: 16rem;
+  height: 16rem;
+  left: -4rem;
+  bottom: -5rem;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.75) 0%, transparent 70%);
+  animation: driftTwo 22s ease-in-out infinite alternate;
 }
 
 .card {
   width: min(560px, 100%);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: 24px;
   background: var(--card);
-  padding: 1.25rem;
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+  padding: 1.5rem;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
+  backdrop-filter: blur(14px);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 0.5rem;
+  background: linear-gradient(90deg, var(--theme), color-mix(in srgb, var(--theme) 55%, white));
 }
 
 h1 {
-  margin: 0 0 1rem;
-  font-size: 1.4rem;
+  margin: 0 0 1.15rem;
+  font-size: clamp(1.45rem, 2vw, 1.85rem);
+  letter-spacing: -0.03em;
+}
+
+.card::after {
+  content: attr(data-note);
+  position: absolute;
+  right: 1.25rem;
+  top: 1rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: var(--theme-soft);
+  color: var(--theme);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .row {
@@ -43,7 +115,7 @@ h1 {
   grid-template-columns: 1fr auto;
   gap: 0.75rem;
   align-items: center;
-  padding: 0.65rem 0;
+  padding: 0.9rem 0;
   border-top: 1px solid var(--border);
 }
 
@@ -54,6 +126,7 @@ h1 {
 .label {
   margin: 0;
   color: var(--muted);
+  font-weight: 600;
 }
 
 .value {
@@ -75,11 +148,77 @@ h1 {
 }
 
 .value.no-school {
-  color: var(--muted);
+  color: var(--no-school);
 }
 
 .status {
   margin: 1rem 0 0;
   color: var(--muted);
   font-size: 0.95rem;
+}
+
+body[data-day-theme="odd"] {
+  --theme: var(--odd);
+  --theme-soft: var(--odd-soft);
+}
+
+body[data-day-theme="even"] {
+  --theme: var(--even);
+  --theme-soft: var(--even-soft);
+}
+
+body[data-day-theme="other"] {
+  --theme: var(--other);
+  --theme-soft: var(--other-soft);
+}
+
+body[data-day-theme="no-school"] {
+  --theme: var(--no-school);
+  --theme-soft: var(--no-school-soft);
+}
+
+body[data-theme-source="next"] .card::after {
+  content: "Next school day";
+}
+
+@keyframes ambientShift {
+  0% {
+    background-position: 0% 0%;
+  }
+
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes driftOne {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translate3d(-0.75rem, 0.5rem, 0) scale(1.08);
+    opacity: 0.75;
+  }
+}
+
+@keyframes driftTwo {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.45;
+  }
+
+  100% {
+    transform: translate3d(0.9rem, -0.6rem, 0) scale(1.05);
+    opacity: 0.7;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body,
+  body::before,
+  body::after {
+    animation: none;
+  }
 }
