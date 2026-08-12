@@ -16,6 +16,8 @@
   --no-school-soft: #e2e8f0;
   --theme: var(--other);
   --theme-soft: var(--other-soft);
+  --radius-lg: 24px;
+  --radius-md: 16px;
 }
 
 * {
@@ -25,7 +27,7 @@
 body {
   margin: 0;
   min-height: 100vh;
-  font-family: "Source Sans 3", "Segoe UI", sans-serif;
+  font-family: "Avenir Next", "Nunito Sans", "Source Sans 3", "Segoe UI", sans-serif;
   color: var(--text);
   background:
     radial-gradient(circle at top left, var(--theme-soft) 0%, transparent 42%),
@@ -33,7 +35,7 @@ body {
     linear-gradient(145deg, var(--bg) 0%, var(--bg-2) 55%, var(--bg-3) 100%);
   display: grid;
   place-items: center;
-  padding: 1rem;
+  padding: clamp(0.85rem, 3vw, 1.4rem);
   position: relative;
   overflow: hidden;
   background-size: 140% 140%;
@@ -70,11 +72,11 @@ body::after {
 }
 
 .card {
-  width: min(560px, 100%);
+  width: min(620px, 100%);
   border: 1px solid var(--border);
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   background: var(--card);
-  padding: 1.5rem;
+  padding: clamp(1rem, 2.8vw, 1.8rem);
   box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
   backdrop-filter: blur(14px);
   position: relative;
@@ -90,17 +92,25 @@ body::after {
 }
 
 h1 {
-  margin: 0 0 1.15rem;
-  font-size: clamp(1.45rem, 2vw, 1.85rem);
-  letter-spacing: -0.03em;
+  margin: 0;
+  font-size: clamp(1.5rem, 2.1vw, 2rem);
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.subtitle {
+  margin: 0.28rem 0 1rem;
+  color: var(--muted);
+  font-size: clamp(0.9rem, 1.6vw, 1rem);
+  font-weight: 600;
 }
 
 .hero {
   border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 1rem 1.1rem;
+  border-radius: calc(var(--radius-md) + 2px);
+  padding: clamp(0.9rem, 2.3vw, 1.2rem);
   background: color-mix(in srgb, var(--theme-soft) 58%, white);
-  margin-bottom: 0.95rem;
+  margin-bottom: 1rem;
 }
 
 .hero-context {
@@ -113,7 +123,7 @@ h1 {
 }
 
 .hero-parity {
-  margin: 0.25rem 0 0;
+  margin: 0.28rem 0 0;
   font-size: clamp(2rem, 7.5vw, 3.2rem);
   font-weight: 800;
   letter-spacing: -0.035em;
@@ -130,7 +140,7 @@ h1 {
 }
 
 .hero-note {
-  margin: 0.45rem 0 0;
+  margin: 0.55rem 0 0;
   font-size: 0.95rem;
   font-weight: 700;
   color: color-mix(in srgb, var(--theme) 82%, #0f172a);
@@ -171,9 +181,9 @@ h1 {
 
 .next-card {
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.64);
-  margin-bottom: 0.9rem;
+  margin-bottom: 1rem;
 }
 
 .card::after {
@@ -196,7 +206,7 @@ h1 {
   grid-template-columns: 1fr auto;
   gap: 0.75rem;
   align-items: center;
-  padding: 0.9rem 0.5rem;
+  padding: 0.95rem 0.65rem;
   border-top: 1px solid var(--border);
 }
 
@@ -218,6 +228,7 @@ h1 {
   margin: 0;
   font-weight: 700;
   text-align: right;
+  font-size: 0.98rem;
 }
 
 .value.odd {
@@ -237,15 +248,16 @@ h1 {
 }
 
 .status {
-  margin: 1rem 0 0;
+  margin: 1.05rem 0 0;
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  min-height: 1.25em;
 }
 
 .upcoming-strip {
   border: 1px dashed color-mix(in srgb, var(--theme) 35%, transparent);
   border-radius: 14px;
-  padding: 0.7rem 0.75rem;
+  padding: 0.75rem 0.78rem;
   background: color-mix(in srgb, var(--theme-soft) 35%, white);
 }
 
@@ -292,6 +304,7 @@ h1 {
   cursor: pointer;
   color: var(--muted);
   font-weight: 700;
+  padding: 0.15rem 0;
 }
 
 .upcoming-list {
@@ -371,16 +384,61 @@ body[data-theme-source="next"] .card::after {
 }
 
 @media (max-width: 520px) {
+  body {
+    padding: 0.7rem;
+  }
+
+  .card {
+    border-radius: 18px;
+    padding: 0.9rem;
+    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.14);
+  }
+
+  .subtitle {
+    margin-bottom: 0.85rem;
+  }
+
+  .hero {
+    border-radius: 14px;
+    padding: 0.82rem 0.85rem;
+  }
+
+  .hero-parity {
+    font-size: clamp(1.6rem, 11vw, 2.25rem);
+    gap: 0.38rem;
+  }
+
+  .hero-date,
+  .hero-note {
+    font-size: 0.88rem;
+  }
+
+  .next-card,
+  .upcoming-strip {
+    border-radius: 13px;
+  }
+
   .row {
     grid-template-columns: 1fr;
-    gap: 0.3rem;
+    gap: 0.26rem;
+    padding: 0.78rem 0.55rem;
+  }
+
+  .row .label {
+    font-size: 0.84rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
   }
 
   .value {
     text-align: left;
+    font-size: 0.95rem;
+    overflow-wrap: anywhere;
   }
 
   .card::after {
-    right: 1rem;
+    position: static;
+    display: inline-block;
+    margin: 0.2rem 0 0.72rem;
   }
 }
