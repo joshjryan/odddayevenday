@@ -90,10 +90,10 @@ function formatSchoolDayCount(count) {
   }
 
   if (count === 1) {
-    return "1 school day away";
+    return "1 day away";
   }
 
-  return `${count} school days away`;
+  return `${count} days away`;
 }
 
 function setText(element, text) {
@@ -147,24 +147,6 @@ function appendListItem(container, text) {
   container.appendChild(createElement("li", "", text));
 }
 
-function countSchoolDaysUntil(todayIso, targetIso, data, canceledDaysSet) {
-  let count = 0;
-  const schoolDates = Object.keys(data.days).sort();
-
-  for (const schoolDate of schoolDates) {
-    if (schoolDate <= todayIso || schoolDate > targetIso) {
-      continue;
-    }
-
-    const entry = resolveDayEntry(schoolDate, data, canceledDaysSet);
-    if (entry && entry.school !== false) {
-      count += 1;
-    }
-  }
-
-  return count;
-}
-
 function findUpcomingSchoolDays(todayIso, data, canceledDaysSet, limit = 7) {
   const schoolDates = Object.keys(data.days).sort();
   const upcoming = [];
@@ -186,8 +168,6 @@ function findUpcomingSchoolDays(todayIso, data, canceledDaysSet, limit = 7) {
   }
 
   return upcoming;
-
-  return utcDate.toISOString().slice(0, 10);
 }
 
 function isCanceledDay(isoDate, canceledDaysSet) {
@@ -338,11 +318,11 @@ function render() {
   }
 
   if (nextSchoolDay) {
-    const schoolDayCount = countSchoolDaysUntil(todayIso, nextSchoolDay.date, scheduleData, canceledDaysSet);
+    const dayCount = getCalendarDayDelta(todayIso, nextSchoolDay.date);
 
     setText(nextSchoolDayEl, toPrettyDate(nextSchoolDay.date, timezone));
     setText(nextRelativeEl, formatRelativeDay(todayIso, nextSchoolDay.date));
-    setText(nextSchoolDayCountEl, formatSchoolDayCount(schoolDayCount));
+    setText(nextSchoolDayCountEl, formatSchoolDayCount(dayCount));
     setText(nextParityEl, formatDayTypeLabel(nextSchoolDay.entry));
     setDayTypeStyle(nextParityEl, nextSchoolDay.entry);
 
