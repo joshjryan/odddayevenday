@@ -37,7 +37,8 @@ body {
   place-items: center;
   padding: clamp(0.85rem, 3vw, 1.4rem);
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   background-size: 140% 140%;
   animation: ambientShift 24s ease-in-out infinite alternate;
 }
