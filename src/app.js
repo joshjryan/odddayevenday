@@ -8,6 +8,8 @@ const nextSchoolDayEl = document.getElementById("next-school-day");
 const nextRelativeEl = document.getElementById("next-relative");
 const nextSchoolDayCountEl = document.getElementById("next-school-day-count");
 const nextParityEl = document.getElementById("next-parity");
+const nextOtherNoteRowEl = document.getElementById("next-other-note-row");
+const nextOtherNoteEl = document.getElementById("next-other-note");
 const upcomingGlanceEl = document.getElementById("upcoming-glance");
 const upcomingListEl = document.getElementById("upcoming-list");
 const statusEl = document.getElementById("status");
@@ -111,6 +113,14 @@ function clearChildren(element) {
   }
 
   element.textContent = "";
+}
+
+function setHidden(element, isHidden) {
+  if (!element) {
+    return;
+  }
+
+  element.hidden = isHidden;
 }
 
 function createElement(tagName, className, text) {
@@ -323,12 +333,16 @@ function render() {
 
   if (nextSchoolDay) {
     const dayCount = getCalendarDayDelta(todayIso, nextSchoolDay.date);
+    const isOtherDay = nextSchoolDay.entry.type === "other";
+    const hasOtherNote = isOtherDay && Boolean(nextSchoolDay.entry.note);
 
     setText(nextSchoolDayEl, toPrettyDate(nextSchoolDay.date, timezone));
     setText(nextRelativeEl, formatRelativeDay(todayIso, nextSchoolDay.date));
     setText(nextSchoolDayCountEl, formatSchoolDayCount(dayCount));
     setText(nextParityEl, formatDayTypeLabel(nextSchoolDay.entry));
     setDayTypeStyle(nextParityEl, nextSchoolDay.entry);
+    setText(nextOtherNoteEl, hasOtherNote ? nextSchoolDay.entry.note : "");
+    setHidden(nextOtherNoteRowEl, !hasOtherNote);
 
     setText(statusEl, nextSchoolDay.entry.note ? `Next: ${nextSchoolDay.entry.note}` : "");
   } else {
@@ -337,6 +351,8 @@ function render() {
     setText(nextSchoolDayCountEl, "--");
     setText(nextParityEl, "--");
     setDayTypeStyle(nextParityEl, null);
+    setText(nextOtherNoteEl, "");
+    setHidden(nextOtherNoteRowEl, true);
     setText(statusEl, "No upcoming school day found in data. Add more dates to scheduleData.days.");
   }
 

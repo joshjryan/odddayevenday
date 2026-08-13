@@ -15,6 +15,8 @@ test('today section always shows today and includes today note', () => {
     'next-relative': { textContent: '' },
     'next-school-day-count': { textContent: '' },
     'next-parity': { textContent: '', classList: createClassList() },
+    'next-other-note-row': { hidden: true },
+    'next-other-note': { textContent: '' },
     'upcoming-glance': { textContent: '', appendChild() {} },
     'upcoming-list': { textContent: '', appendChild() {} },
     status: { textContent: '' }
@@ -81,6 +83,9 @@ test('today section always shows today and includes today note', () => {
   assert.equal(elements['today-context'].textContent, 'Today');
   assert.equal(elements['today-parity'].textContent, 'NO SCHOOL (OTHER)');
   assert.equal(elements['today-note'].textContent, 'District Professional Learning Day');
+  assert.equal(elements['next-parity'].textContent, 'OTHER');
+  assert.equal(elements['next-other-note'].textContent, 'Transition Day');
+  assert.equal(elements['next-other-note-row'].hidden, false);
   assert.equal(elements['status'].textContent, 'Next: Transition Day');
 });
 
