@@ -354,6 +354,123 @@ body[data-theme-source="next"] .card::after {
   content: "Next school day";
 }
 
+.widget-page {
+  min-height: 0;
+  padding: 0;
+  display: block;
+  overflow: hidden;
+  background: transparent;
+  animation: none;
+}
+
+.widget-page::before,
+.widget-page::after {
+  display: none;
+}
+
+.widget {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.widget-today,
+.widget-next {
+  min-width: 0;
+  padding: 0.8rem 0.95rem;
+}
+
+.widget-next {
+  border-left: 1px solid var(--border);
+}
+
+.widget-label,
+.widget-date,
+.widget-note,
+.widget-relative,
+.widget-status {
+  margin: 0;
+}
+
+.widget-label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.widget-parity,
+.widget-next-parity {
+  margin: 0.16rem 0 0;
+  font-size: clamp(1.6rem, 6vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.widget-parity.odd,
+.widget-next-parity.odd {
+  color: var(--odd);
+}
+
+.widget-parity.even,
+.widget-next-parity.even {
+  color: var(--even);
+}
+
+.widget-parity.other,
+.widget-next-parity.other {
+  color: var(--other);
+}
+
+.widget-parity.no-school,
+.widget-next-parity.no-school {
+  color: var(--no-school);
+}
+
+.widget-date {
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.widget-relative,
+.widget-note,
+.widget-status {
+  margin-top: 0.18rem;
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.widget-note:empty,
+.widget-status:empty {
+  display: none;
+}
+
+.widget-status {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--border);
+  padding: 0.42rem 0.95rem;
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+@media (max-width: 360px) {
+  .widget {
+    grid-template-columns: 1fr;
+  }
+
+  .widget-next {
+    border-top: 1px solid var(--border);
+    border-left: 0;
+  }
+}
+
 @keyframes ambientShift {
   0% {
     background-position: 0% 0%;

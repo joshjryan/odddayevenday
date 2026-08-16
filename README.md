@@ -5,8 +5,18 @@ Simple single-page app that shows:
 - Whether today is an odd/even/other school day
 - The next school day and whether it is odd/even/other
 
+## Widget
+The frameless, compact view lives at `/widget` when `src` is deployed as the site's static root:
+
+```text
+https://odddayevenday.com/widget
+```
+
+It is designed to embed directly in Mango Display and shows today's schedule alongside the next school day.
+
 ## Files
 - `index.html`: page markup
+- `widget/index.html`: compact widget markup
 - `styles.css`: simple styling
 - `schedule-data.js`: your calendar data and rules
 - `app.js`: display and odd/even logic
