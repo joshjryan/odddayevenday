@@ -215,6 +215,11 @@ h1 {
   border-top: 0;
 }
 
+/* .row's display: grid otherwise beats the UA [hidden] rule's specificity */
+.row[hidden] {
+  display: none;
+}
+
 .next-grid {
   margin: 0;
 }
