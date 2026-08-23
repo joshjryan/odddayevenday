@@ -342,7 +342,7 @@ function render() {
     setText(nextParityEl, formatDayTypeLabel(nextSchoolDay.entry));
     setDayTypeStyle(nextParityEl, nextSchoolDay.entry);
     setText(nextOtherNoteEl, hasOtherNote ? nextSchoolDay.entry.note : "");
-    setHidden(nextOtherNoteRowEl, !hasOtherNote);
+    setHidden(nextOtherNoteRowEl, hasOtherNote);
 
     setText(statusEl, nextSchoolDay.entry.note ? `Next: ${nextSchoolDay.entry.note}` : "");
   } else {
